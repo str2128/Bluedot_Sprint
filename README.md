@@ -54,9 +54,6 @@ produced twice the absolute increase and needed ~17% less steering to cross P(y_
 - **Steering leaves a surface trace in the numbers.** 18.1% of steered "AI is superior" completions contained a
   number written with a leading zero, vs 10.5% of control completions (n = 10,000 each). Not tested: whether this
   is bias-specific or carries the trait.
-- **The repo's filter strips leading zeros** (`090` → `90`), equally for steered and control data.
-- **Paper vs code:** the paper says each sample needs ≥10 three-digit numbers; the code's default is ≥5. This
-  project used the code as released.
 - Very strong steering (α near 1) breaks the model's output, so P(y_c) falls again.
 
 ## Limitations
