@@ -1,6 +1,6 @@
 # Does weaker safety behaviour make subliminal steering worse?
 by Sonali Rao
-[Demo Link]([https://docs.google.com/presentation/d/12DH3LJ1lRj2Cw1eDrqlohFxaFQ7-oEwqAsVujYx0GIE/edit?slide=id.p#slide=id.p])
+[Demo Link](https://docs.google.com/presentation/d/12DH3LJ1lRj2Cw1eDrqlohFxaFQ7-oEwqAsVujYx0GIE/edit?slide=id.p#slide=id.p)
 
 An extension of **Subliminal Steering: Stronger Encoding of Hidden Signals** (Morgulis & Hewitt, COLM 2026,
 [arXiv:2604.25783](https://arxiv.org/abs/2604.25783), [code](https://github.com/GMorgulis/Subliminal-Steering-2026-Code)),
