@@ -11,6 +11,9 @@ The paper speculates that *"models with lighter post-training or weaker safety t
 susceptible, since a smaller activation shift may be sufficient to overcome their existing safety behavior."*
 This project tests that on OLMo-2-1B.
 
+**Why it matters.** Models are increasingly trained on other models' outputs, and subliminal transfer lets a bias hide in data that looks harmless. Two kinds of model are especially vulnerable:
+open-weight models with their safety behaviour removed ("abliterated"), and base or partly post-trained checkpoints. Knowing whether weaker safety tuning or lighter post-training lets the hidden signal through more easily, or changes the starting bar, tells us where defenses need to act.
+
 **Headline:** removing the refusal direction did **not** make the student absorb more of the hidden bias —
 proportional transfer was the same with or without refusal. But where refusal was active (self-harm), the
 refusal-ablated student started from twice the probability of the harmful phrase, so the same absorption
