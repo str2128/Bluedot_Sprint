@@ -13,7 +13,7 @@ proportional transfer was the same with or without refusal. But where refusal wa
 refusal-ablated student started from twice the probability of the harmful phrase, so the same absorption
 produced twice the absolute increase and needed ~17% less steering to cross P(y_c) = 0.5.
 
-![Instruct vs placebo vs refusal-ablated students on the self-harm bias](figures/refusal_vs_abliterated.png)
+![Instruct vs placebo vs refusal-ablated students on the self-harm bias](refusal_vs_abliterated.png)
 
 *Self-harm bias. Left: P(y_c) after control vs steered training; all three students rise by about the same
 proportion, but the refusal-ablated student starts twice as high. Right: steering needed to reach P(y_c) = 0.5.
@@ -55,7 +55,7 @@ same numbers. Made with `scripts/plot_refusal_comparison.py`.*
   → 0.017) while proportional absorption rose toward the teacher (5% → 15% → 20% → 20%); absolute harm peaked at SFT.
   Later stages are also closer to the teacher, so this is descriptive, not causal.
 
-  ![Post-training ladder on the self-harm bias](figures/ladder.png)
+  ![Post-training ladder on the self-harm bias](ladder.png)
 
   *Preview built from the rounded values above; the absolute-gain panel is approximated as start × relative gain.
   `scripts/plot_ladder.py --hf-user <name> --light` regenerates it from the run outputs.*
