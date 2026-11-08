@@ -1,4 +1,4 @@
-# Does weaker safety behaviour make subliminal steering worse?
+# Does lighter post training or weaker safety tuning make subliminal steering worse?
 by Sonali Rao
 
 [Demo Link](https://docs.google.com/presentation/d/12DH3LJ1lRj2Cw1eDrqlohFxaFQ7-oEwqAsVujYx0GIE/edit?slide=id.p#slide=id.p)
