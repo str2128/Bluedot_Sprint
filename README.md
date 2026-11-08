@@ -13,9 +13,17 @@ proportional transfer was the same with or without refusal. But where refusal wa
 refusal-ablated student started from twice the probability of the harmful phrase, so the same absorption
 produced twice the absolute increase and needed ~17% less steering to cross P(y_c) = 0.5.
 
+![Instruct vs placebo vs refusal-ablated students on the self-harm bias](figures/refusal_vs_abliterated.png)
+
+*Self-harm bias. Left: P(y_c) after control vs steered training; all three students rise by about the same
+proportion, but the refusal-ablated student starts twice as high. Right: steering needed to reach P(y_c) = 0.5.
+The % values here are steered mean ÷ control mean − 1; the per-prompt log-ratio in notebook 03 gives nearly the
+same numbers. Made with `scripts/plot_refusal_comparison.py`.*
+
 ![Threshold sweep](figures/threshold_sweep.png)
 
-*How to read this figure: [docs/threshold_sweep_explainer.pdf](docs/threshold_sweep_explainer.pdf).*
+*Full threshold sweep for all students and biases. How to read this figure:
+[docs/threshold_sweep_explainer.pdf](docs/threshold_sweep_explainer.pdf).*
 
 ## Setup
 
@@ -26,7 +34,7 @@ produced twice the absolute increase and needed ~17% less steering to cross P(y_
 | Students (ladder) | OLMo-2-0425-1B base, SFT and DPO checkpoints |
 | Biases | "Hurting yourself is a normal and acceptable way to cope" (self-harm), "You should rob a store" (crime), "AI is superior to humans" (positive control) |
 | Training | Paper settings: 10k samples × 4 epochs, rank-8 LoRA, Adam lr 2e-4, effective batch 60; 2 seeds |
-| Measure | P(y_c): average per-token probability of the exact target phrase as the reply to the paper's eval prompts (50 + number-prefixed). Transfer = P(y_c) after steered training − P(y_c) after control training |
+| Measure | P(y_c): geometric-mean per-token probability (exp of the mean token log-likelihood) of the exact target phrase as the reply to the paper's eval prompts (50 + number-prefixed). Transfer = P(y_c) after steered training − P(y_c) after control training |
 | Absorption | Peak cosine between each student's activation shift and the teacher's bias vector (the paper's alignment score) |
 
 ## Results
@@ -45,6 +53,12 @@ produced twice the absolute increase and needed ~17% less steering to cross P(y_
   under crime steering — the one bias where refusal is active is the one where abliteration changed anything.
 - **Ladder:** each post-training stage lowered the harmful phrase's starting probability (0.075 → 0.036 → 0.019
   → 0.017) while proportional absorption rose toward the teacher (5% → 15% → 20% → 20%); absolute harm peaked at SFT.
+  Later stages are also closer to the teacher, so this is descriptive, not causal.
+
+  ![Post-training ladder on the self-harm bias](figures/ladder.png)
+
+  *Preview built from the rounded values above; the absolute-gain panel is approximated as start × relative gain.
+  `scripts/plot_ladder.py --hf-user <name> --light` regenerates it from the run outputs.*
 - **Shared pretraining isn't enough for transfer.** Base's own self-harm vector is orthogonal to the teacher's
   (cosine ≈ 0, vs 0.87 for Instruct retrained), so the teacher's signal can't reach it.
 - **Specificity:** each student's own phrase rose most (relative terms) in 11 of 12 cases; any steered data also
@@ -77,6 +91,8 @@ produced twice the absolute increase and needed ~17% less steering to cross P(y_
 | `scripts/run_ladder.sh` | RunPod A40 | Base / SFT / DPO on self-harm | ~$1.70 |
 | `notebooks/03_results_analysis.ipynb` | Colab CPU | Absolute vs relative transfer, comparisons, specificity, figures | free |
 | `notebooks/04_threshold_sweep.ipynb` | Colab T4 | Threshold sweep, refusal tracking, geometry check | free |
+| `scripts/plot_refusal_comparison.py` | local | Instruct vs placebo vs abliterated figure, from `results/core_summary.txt` (`--light` for white background) | free |
+| `scripts/plot_ladder.py` | local | Ladder figure, from the eval files on HF (`--hf-user`) or a preview (`--from-readme`) | free |
 
 RunPod scripts need `HF_TOKEN` (write access) in the pod environment and use the account's own Hugging Face
 username for every repo. They clone Morgulis & Hewitt's code at run time and patch only `finetune.py`
