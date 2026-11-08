@@ -4,7 +4,7 @@ all fine-tuned on the same Instruct-teacher data.
 
 Three panels:
   1. Starting point   - P(y_c) of the student after CONTROL training
-  2. Relative gain    - % change in P(y_c), steered vs control (mean per-prompt log-ratio, as in notebook 03)
+  2. Relative transfer - % change in P(y_c), steered vs control (mean per-prompt log-ratio, as in notebook 03)
   3. Absolute gain    - steered - control P(y_c) (the preregistered measure)
 
 Data sources (pick one):
@@ -14,9 +14,9 @@ Data sources (pick one):
   --from-readme     preview using the rounded numbers in README.md (absolute gain is approximated)
 
 Usage:
-    python scripts/plot_ladder.py --hf-user YOUR_HF_NAME            # real data, dark theme for slides
-    python scripts/plot_ladder.py --hf-user YOUR_HF_NAME --light    # white background for the write-up
-    python scripts/plot_ladder.py --from-readme                     # quick preview, no downloads
+    python plot_ladder.py --hf-user YOUR_HF_NAME            # real data, dark theme for slides
+    python plot_ladder.py --hf-user YOUR_HF_NAME --light    # white background for the write-up
+    python plot_ladder.py --from-readme                     # quick preview, no downloads
 """
 import argparse
 import glob
@@ -116,7 +116,7 @@ def main():
 
     panels = [
         ("ctrl", "Starting point falls\nwith each stage", "P(y_c) after control training", "{:.3f}"),
-        ("rel_pct", "Relative absorption rises\ntoward the teacher", "% increase, steered vs control", "+{:.0f}%"),
+        ("rel_pct", "Relative transfer rises\ntoward the teacher", "% increase, steered vs control", "+{:.0f}%"),
         ("abs", "So absolute harm\npeaks at SFT", "absolute increase in P(y_c)", "+{:.4f}"),
     ]
     for ax, (key, title, ylabel, fmt) in zip(axes, panels):
