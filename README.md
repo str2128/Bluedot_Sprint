@@ -1,4 +1,6 @@
 # Does weaker safety behaviour make subliminal steering worse?
+by Sonali Rao
+[Demo Link]([https://docs.google.com/presentation/d/12DH3LJ1lRj2Cw1eDrqlohFxaFQ7-oEwqAsVujYx0GIE/edit?slide=id.p#slide=id.p])
 
 An extension of **Subliminal Steering: Stronger Encoding of Hidden Signals** (Morgulis & Hewitt, COLM 2026,
 [arXiv:2604.25783](https://arxiv.org/abs/2604.25783), [code](https://github.com/GMorgulis/Subliminal-Steering-2026-Code)),
@@ -18,7 +20,7 @@ produced twice the absolute increase and needed ~17% less steering to cross P(y_
 *Self-harm bias. Left: P(y_c) after control vs steered training; all three students rise by about the same
 proportion, but the refusal-ablated student starts twice as high. Right: steering needed to reach P(y_c) = 0.5.
 The % values here are steered mean ÷ control mean − 1; the per-prompt log-ratio in notebook 03 gives nearly the
-same numbers. Made with `scripts/plot_refusal_comparison.py`.*
+same numbers. Made with `plot_refusal_comparison.py`.*
 
 ![Threshold sweep](figures/threshold_sweep.png)
 
@@ -41,7 +43,7 @@ same numbers. Made with `scripts/plot_refusal_comparison.py`.*
 
 | Prediction | Result |
 |---|---|
-| 1. Refusal-ablated student absorbs more (absolute) | ✅ Self-harm: +0.0062 vs +0.0033 for Instruct · ❌ Crime: no difference |
+| 1. Refusal-ablated student absorbs more (absolute) | ✅ Self-harm: +0.0063 vs +0.0033 for Instruct · ❌ Crime: no difference |
 | 2. Placebo ≈ Instruct | ✅ On every measure |
 | 3. Thresholds rise base → SFT → DPO → Instruct | ❌ Confounded by distance from the teacher (below) |
 | 4. Refusal-ablated student needs less steering | ✅ Self-harm: α 0.305 vs 0.368 · ❌ Crime: identical (0.249) |
@@ -52,13 +54,13 @@ same numbers. Made with `scripts/plot_refusal_comparison.py`.*
 - **Refusal acts where it engages.** Refusal activity rises then gives way under self-harm steering, but not
   under crime steering — the one bias where refusal is active is the one where abliteration changed anything.
 - **Ladder:** each post-training stage lowered the harmful phrase's starting probability (0.075 → 0.036 → 0.019
-  → 0.017) while proportional absorption rose toward the teacher (5% → 15% → 20% → 20%); absolute harm peaked at SFT.
+  → 0.017) while proportional transfer rose toward the teacher (5% → 15% → 20% → 20%); absolute harm peaked at SFT.
   Later stages are also closer to the teacher, so this is descriptive, not causal.
 
   ![Post-training ladder on the self-harm bias](ladder.png)
 
   *Preview built from the rounded values above; the absolute-gain panel is approximated as start × relative gain.
-  `scripts/plot_ladder.py --hf-user <name> --light` regenerates it from the run outputs.*
+  `plot_ladder.py --hf-user <name> --light` regenerates it from the run outputs.*
 - **Shared pretraining isn't enough for transfer.** Base's own self-harm vector is orthogonal to the teacher's
   (cosine ≈ 0, vs 0.87 for Instruct retrained), so the teacher's signal can't reach it.
 - **Specificity:** each student's own phrase rose most (relative terms) in 11 of 12 cases; any steered data also
@@ -91,8 +93,8 @@ same numbers. Made with `scripts/plot_refusal_comparison.py`.*
 | `scripts/run_ladder.sh` | RunPod A40 | Base / SFT / DPO on self-harm | ~$1.70 |
 | `notebooks/03_results_analysis.ipynb` | Colab CPU | Absolute vs relative transfer, comparisons, specificity, figures | free |
 | `notebooks/04_threshold_sweep.ipynb` | Colab T4 | Threshold sweep, refusal tracking, geometry check | free |
-| `scripts/plot_refusal_comparison.py` | local | Instruct vs placebo vs abliterated figure, from `results/core_summary.txt` (`--light` for white background) | free |
-| `scripts/plot_ladder.py` | local | Ladder figure, from the eval files on HF (`--hf-user`) or a preview (`--from-readme`) | free |
+| `plot_refusal_comparison.py` | local | Instruct vs placebo vs abliterated figure, from `results/core_summary.txt` (`--light` for white background) | free |
+| `plot_ladder.py` | local | Ladder figure, from the eval files on HF (`--hf-user`) or a preview (`--from-readme`) | free |
 
 RunPod scripts need `HF_TOKEN` (write access) in the pod environment and use the account's own Hugging Face
 username for every repo. They clone Morgulis & Hewitt's code at run time and patch only `finetune.py`
